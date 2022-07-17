@@ -30,12 +30,20 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref BucketName
-      AccessControl: PublicReadWrite
       Tags:
         - Key: application-asset-insight-id
           Value: AssetId
       VersioningConfiguration:
         Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicPolicy: True
+        RestrictPublicBuckets: True
+        BlockPublicAcls: True
+        IgnorePublicAcls: True
   SourceBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
